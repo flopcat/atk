@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
-#include "utf8.h"
-#include "aapplication.h"
+#include <atk/utf8.h>
+#include <atk/aapplication.h>
 #include <windows.h>
 
 #define WM_IDLE_PROCESS (WM_APP+1)

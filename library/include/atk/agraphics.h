@@ -1,7 +1,7 @@
 #ifndef AGRAPHICS_H
 #define AGRAPHICS_H
 #include <string>
-#include "utf8.h"
+#include <atk/utf8.h>
 #include <windows.h>
 
 class APaintObject;

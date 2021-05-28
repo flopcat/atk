@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <iostream>
-#include "utf8.h"
-#include "awidget.h"
-#include "agraphics.h"
-#include "aapplication.h"
+#include "atk/utf8.h"
+#include "atk/awidget.h"
+#include "atk/agraphics.h"
+#include "atk/aapplication.h"
 
 std::string AWidget::defaultWinClassName("AWidgetClass");
 

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <iostream>
-#include "aobject.h"
+#include "atk/aobject.h"
 
 AObject::AObject(AObject *owner)
     : canary(0xfedbeef), parent_(owner), children(), objectName_()
@@ -82,7 +82,7 @@ void AObject::takeThing(AThing *thing)
 
 AObject *AObject::parent() const { return parent_; }
 
-std::__cxx11::string AObject::objectName() const { return objectName_; }
+std::string AObject::objectName() const { return objectName_; }
 
 void AObject::setObjectName(const std::string &name)
 {

@@ -1,7 +1,7 @@
 #ifndef AWINDOW_H
 #define AWINDOW_H
 
-#include <awidget.h>
+#include <atk/awidget.h>
 
 class AWindow : public AWidget
 {

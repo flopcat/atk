@@ -45,7 +45,3 @@ CMakeFiles
 *.dll.a
 
 .dep.inc
-
-# eclipse files
-.project
-.cproject

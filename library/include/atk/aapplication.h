@@ -1,8 +1,8 @@
 #ifndef AAPPLICATION_H
 #define AAPPLICATION_H
 
-#include <aobject.h>
-#include <atypes.h>
+#include <atk/aobject.h>
+#include <atk/atypes.h>
 #include <set>
 #include <windows.h>
 

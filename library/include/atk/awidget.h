@@ -3,8 +3,8 @@
 
 #include <string>
 #include <functional>
-#include <aobject.h>
-#include <agraphics.h>
+#include <atk/aobject.h>
+#include <atk/agraphics.h>
 #include <windows.h>
 
 class AControlHost;

@@ -1,9 +1,9 @@
-#include <aapplication.h>
-#include <awindow.h>
-#include "abutton.h"
-#include <agraphics.h>
+#include <atk/aapplication.h>
+#include <atk/awindow.h>
+#include <atk/abutton.h>
+#include <atk/agraphics.h>
 #include <iostream>
-#include <utf8.h>
+#include <atk/utf8.h>
 #include <windows.h>
 
 AWindow::AWindow(AWidget *owner) : AWidget(owner)
