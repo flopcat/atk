@@ -7,10 +7,6 @@ class AWindow : public AWidget
 {
 public:
     AWindow(AWidget *owner);
-
-private:
-    bool createEvent();
-    void paintEvent();
 };
 
 #endif // AWINDOW_H
