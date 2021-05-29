@@ -186,6 +186,16 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
         self->destroyEvent();
         self->bereave();
         return 0;
+    case WM_ERASEBKGND: {
+        APainter p((HDC)wParam);
+        AColor bg(GetSysColor(COLOR_BTNFACE));
+        ABrush b(bg);
+        p.setBrush(b);
+        auto sz = self->size();
+        p.fillRect(ARect(0,0,sz.width(),sz.height()));
+        std::cout << "erased background" << std::endl;
+        return 1;
+    }
     case WM_PAINT:
         self->paintEvent();
         return 0;

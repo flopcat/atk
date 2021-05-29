@@ -172,13 +172,16 @@ public:
     APainter(HWND widgetHandle) : hWnd(widgetHandle),
         orgPen(0), orgBrush(0), orgFont(0), orgBitmap(0),
         orgRegion(0), nowBrush(0) { hdc = BeginPaint(hWnd, &ps); }
+    APainter(HDC surface) : hWnd(NULL), hdc(surface),
+        orgPen(0), orgBrush(0), orgFont(0), orgBitmap(0),
+        orgRegion(0), nowBrush(0) { }
     ~APainter() {
         if (orgPen) DeleteObject(SelectObject(hdc, orgPen));
         if (orgBrush) DeleteObject(SelectObject(hdc, orgBrush));
         if (orgFont) DeleteObject(SelectObject(hdc, orgFont));
         if (orgBitmap) DeleteObject(SelectObject(hdc, orgBitmap));
         if (orgRegion) DeleteObject(SelectObject(hdc, orgRegion));
-        EndPaint(hWnd, &ps); }
+        if (hWnd) EndPaint(hWnd, &ps); }
     HDC handle() const { return hdc; }
     void setBrush(const ABrush &brush) {
         nowBrush = brush.makeNativeHandle();

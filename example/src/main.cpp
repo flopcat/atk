@@ -5,14 +5,15 @@
 
 class ExampleWindow : public AWindow {
 public:
-	ExampleWindow(AWidget *owner);
+    ExampleWindow(AWidget *owner);
 private:
-    bool createEvent();
-    void paintEvent();
+    virtual bool createEvent() override;
+    virtual void paintEvent() override;
 };
 
 ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
 {
+	setObjectName("ExampleWindow");
     resize({640, 480});
     move({320, 240});
     setStyle(WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU);
@@ -92,11 +93,11 @@ void ExampleWindow::paintEvent()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
-	AApplication app(hInstance, nCmdShow);
-	AWindow window(nullptr);
-	ASlot<> terminateMe(nullptr, [&]() {
-		app.quit();
-	});
-	window.destroyed->connect(&terminateMe);
-	return app.run();
+    AApplication app(hInstance, nCmdShow);
+    ExampleWindow window(nullptr);
+    ASlot<> terminateMe(nullptr, [&]() {
+        app.quit();
+    });
+    window.destroyed->connect(&terminateMe);
+    return app.run();
 }
