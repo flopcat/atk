@@ -24,6 +24,8 @@ protected:
     ASignal<> *aboutToDestroyChild;
     ASignal<> *childDestroyed;
 
+    static const UINT defaultChildStyle;
+
 private:
     AWidget *child;
     std::string childClass_;

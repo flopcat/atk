@@ -41,30 +41,30 @@ bool ExampleWindow::createEvent()
 
     auto groupBox = new AGroupBox(this);
     groupBox->move({11*1,9*9});
-    groupBox->resize({11*12, 9*3*5+9});
+    groupBox->resize({11*10, 9*3*5+9});
 
     auto radioGroup = new ARadioGroup(this);
     auto radio = new ARadioButton(groupBox);
     radio->move({11*1,27*1});
-    radio->resize({110,27});
+    radio->resize({11*8,27});
     radio->setText("Radio1");
     radioGroup->append(radio);
 
     radio = new ARadioButton(groupBox);
     radio->move({11*1,27*2});
-    radio->resize({110,27});
+    radio->resize({11*8,27});
     radio->setText("Radio2");
     radioGroup->append(radio);
 
     radio = new ARadioButton(groupBox);
     radio->move({11*1,27*3});
-    radio->resize({110,27});
+    radio->resize({11*8,27});
     radio->setText("Radio3");
     radioGroup->append(radio);
 
     radio = new ARadioButton(groupBox);
     radio->move({11*1,27*4});
-    radio->resize({110,27});
+    radio->resize({11*8,27});
     radio->setText("Radio4");
     radioGroup->append(radio);
 
@@ -73,9 +73,39 @@ bool ExampleWindow::createEvent()
     }));
 
     auto label = new ALabel(this);
-    label->move({11*1, 26*9});
-    label->resize({11*10, 9*3});
-    label->setText("Label");
+    label->move({11*12, 9*1});
+    label->resize({11*10, 9*2});
+    label->setText("NoFrame");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*4});
+    label->resize({11*10, 9*2});
+    label->setFrameEdge(ALabel::GrayFrame);
+    label->setText("GrayFrame");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*7});
+    label->resize({11*10, 9*2});
+    label->setFrameEdge(ALabel::WhiteFrame);
+    label->setText("WhiteFrame");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*10});
+    label->resize({11*10, 9*2});
+    label->setFrameEdge(ALabel::BlackFrame);
+    label->setText("BlackFrame");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*13});
+    label->resize({11*10, 9*2});
+    label->setFrameEdge(ALabel::SunkenFrame);
+    label->setText("SunkenFrame");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*16});
+    label->resize({11*10, 9*2});
+    label->setFrameEdge(ALabel::EtchedFrame);
+    label->setText("EtchedFrame");
 
     return true;
 }
@@ -92,7 +122,7 @@ void ExampleWindow::paintEvent()
     p.setBgColor(bg);
     p.setFgColor(AColor(0x5a, 0x5a, 0x5a));
     p.setFont(f);
-    p.drawText(0, 0, "This text is drawn with the painting api.");
+    p.drawText(11*1, 9*26, "This text is drawn with the painting api.");
 }
 
 

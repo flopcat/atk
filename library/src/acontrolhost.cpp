@@ -1,9 +1,11 @@
 #include <atk/acontrolhost.h>
 
+const UINT AControlHost::defaultChildStyle = WS_VISIBLE | WS_CHILD;
+
 AControlHost::AControlHost(AWidget *owner) : AWidget(owner)
 {
     setObjectName("Control Host Object");
-    setStyle(WS_VISIBLE | WS_CHILD);
+    setStyle(defaultChildStyle);
     child = nullptr;
     // Create slots
     childCreated = new ASignal<>(this);

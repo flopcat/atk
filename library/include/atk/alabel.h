@@ -13,9 +13,12 @@
 class ALabel : public AControlHost
 {
 public:
+	enum FrameEdge { NoFrame, GrayFrame, WhiteFrame, BlackFrame, SunkenFrame, EtchedFrame };
+
     ALabel(AWidget *parent);
     const std::string &text();
     void setText(const std::string &text);
+    void setFrameEdge(FrameEdge edge);
 };
 
 #endif // ALABEL_H
