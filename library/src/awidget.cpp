@@ -5,6 +5,8 @@
 #include "atk/agraphics.h"
 #include "atk/aapplication.h"
 
+APaintHandle AWidget::defaultFont(AFont("Segoe UI", 16));
+
 std::string AWidget::defaultWinClassName("AWidgetClass");
 
 ATOM AWidget::registerClass = []() -> ATOM {
@@ -73,6 +75,7 @@ void AWidget::create()
         std::cout << GetLastError() << std::endl;
     }
     assert(handle_ != nullptr);
+    SendMessage(handle_, WM_SETFONT, (WPARAM)defaultFont.handle(), 0);
     std::cout << "create finished" << std::endl;
 }
 

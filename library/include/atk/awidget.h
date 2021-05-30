@@ -56,6 +56,7 @@ protected:
     virtual void paintEvent();
     virtual void resizeEvent();
 
+    static APaintHandle defaultFont;
     static std::string defaultWinClassName;
     static ATOM registerClass;
     std::string winClassName;

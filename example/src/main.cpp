@@ -82,11 +82,11 @@ void ExampleWindow::paintEvent()
     ABrush b(bg);
     p.setBrush(b);
     p.fillRect(ARect(0,0,size().width(),size().height()));
-    AFont f("MS Sans Serif", 16, 400);
+    AFont f("Segoe UI", 16, 400);
     p.setBgColor(bg);
     p.setFgColor(AColor(0x5a, 0x5a, 0x5a));
     p.setFont(f);
-    p.drawText(0, 0, "Hello Windows!");
+    p.drawText(0, 0, "This text is drawn with the painting api.");
 }
 
 

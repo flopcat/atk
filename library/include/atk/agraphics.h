@@ -86,8 +86,24 @@ private:
 class APaintObject {
 public:
     APaintObject() {}
-    ~APaintObject() { }
+    virtual ~APaintObject() { }
     virtual HGDIOBJ makeNativeHandle() const = 0;
+};
+
+class APaintHandle {
+public:
+	explicit APaintHandle(const APaintObject &obj) {
+		h = obj.makeNativeHandle();
+	}
+	~APaintHandle() {
+		if (!h)
+			return;
+		DeleteObject(h);
+		h = nullptr;
+	}
+	HGDIOBJ handle() { return h; }
+private:
+	HGDIOBJ h = nullptr;
 };
 
 class APen : public APaintObject {
@@ -121,13 +137,13 @@ private:
 
 class AFont : public APaintObject {
 public:
-    AFont(const std::string &name = "MS Sans Serif", int height = 18,
+    AFont(const std::string &name = "Microsoft Sans Serif", int height = 16,
           int weight = 400, bool italic = false, bool underline = false)
         : APaintObject(), name_(name), height_(height), weight_(weight),
         italic_(italic), underline_(underline) {}
     HGDIOBJ makeNativeHandle() const {
         return CreateFont(height_, 0, 0, 0, weight_, italic_, underline_, 0,
-                ANSI_CHARSET, 0, 0, 0, ANTIALIASED_QUALITY, widen(name_).c_str());
+                ANSI_CHARSET, 0, 0, 0, CLEARTYPE_QUALITY, widen(name_).c_str());
     }
     std::string name() const { return name_; }
     const std::string& nameR() const { return name_; }
