@@ -79,6 +79,7 @@ bool ACheckBox::wmCommand(WPARAM wParam, LPARAM lParam, int &ret)
 
 ARadioButton::ARadioButton(AWidget *parent) : ACheckBox(parent)
 {
+    setObjectName("RadioButton Object");
     setAlignment(TextOnRight);
 }
 
@@ -89,6 +90,7 @@ void ARadioButton::setAlignment(TextAlignment alignment)
 
 ARadioGroup::ARadioGroup(AObject *owner) : AObject(owner)
 {
+    setObjectName("RadioGroup Object");
     radio_clickedSlot = new ASlot<AButton*>(this, &radio_buttonClicked);
     radio_deletedSlot = new ASlot<AObject*>(this, [this](AObject* obj) { remove((ARadioButton*)obj); });
     selected = new ASignal<ARadioButton*>(this);

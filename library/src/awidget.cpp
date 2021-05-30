@@ -88,7 +88,7 @@ void AWidget::show()
 {
     std::cout << "show called" << std::endl;
     aApp->addPendingFunction(new ASlot<>(this, [this]() {
-        std::cout << "show made";
+        std::cout << "show made" << std::endl;
         ShowWindow(handle_, SW_SHOW);
         UpdateWindow(handle_);
     }));

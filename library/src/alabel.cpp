@@ -2,7 +2,7 @@
 
 ALabel::ALabel(AWidget *owner) : AControlHost(owner)
 {
-    setObjectName("Button Object");
+    setObjectName("Label Object");
 
     setChildClass("STATIC");
     setChildText("Label");

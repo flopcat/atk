@@ -11,6 +11,7 @@ AApplication *aApp = NULL;
 AApplication::AApplication(int argc, const wchar_t *argv[])
     : AObject(NULL)
 {
+    setObjectName("Application Object");
     programName_ = narrow(std::wstring(argv[0]));
     for (int i = 1; i < argc; i++)
         args_.push_back(narrow(argv[i]));

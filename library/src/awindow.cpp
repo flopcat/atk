@@ -8,6 +8,7 @@
 
 AWindow::AWindow(AWidget *owner) : AWidget(owner)
 {
+    setObjectName("Window Object");
     setStyle(WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU);
 }
 
