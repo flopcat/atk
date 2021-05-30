@@ -230,6 +230,9 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
 
 void AWidget::setMessageFunction(UINT msg, MessageFunc func)
 {
+	auto it = messageFunctions.find(msg);
+	if (it != messageFunctions.end())
+		messageFunctions.erase(it);
     messageFunctions.insert({msg, func});
 }
 

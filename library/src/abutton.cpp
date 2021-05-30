@@ -8,7 +8,7 @@ AButton::AButton(AWidget *owner) : AControlHost(owner)
 
     setChildClass("BUTTON");    
     setChildText("Button");
-    //setMessageFunction(WM_COMMAND, &AButton::wmCommand);
+    setMessageFunction(WM_COMMAND, &AButton::wmCommand);
 }
 
 const std::string &AButton::text()
