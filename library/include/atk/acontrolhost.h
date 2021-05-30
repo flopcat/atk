@@ -1,5 +1,5 @@
 #ifndef ACONTROLHOST_H
-#define CONTROLHOST_H
+#define ACONTROLHOST_H
 
 #include <atk/awidget.h>
 #include <windows.h>

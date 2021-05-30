@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <atk/aapplication.h>
 #include <atk/abutton.h>
+#include <atk/alabel.h>
 #include <atk/awindow.h>
 
 class ExampleWindow : public AWindow {
@@ -13,7 +14,7 @@ private:
 
 ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
 {
-	setObjectName("ExampleWindow");
+    setObjectName("ExampleWindow");
     resize({640, 480});
     move({320, 240});
     setStyle(WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU);
@@ -40,7 +41,7 @@ bool ExampleWindow::createEvent()
 
     auto groupBox = new AGroupBox(this);
     groupBox->move({11*1,9*9});
-    groupBox->resize({11*12,27*5+9});
+    groupBox->resize({11*12, 9*3*5+9});
 
     auto radioGroup = new ARadioGroup(this);
     auto radio = new ARadioButton(groupBox);
@@ -70,6 +71,11 @@ bool ExampleWindow::createEvent()
     radioGroup->selected->connect(new ASlot<ARadioButton*>(this, [](ARadioButton* radio) {
         std::cout << "button " << radio->text() << " selected" << std::endl;
     }));
+
+    auto label = new ALabel(this);
+    label->move({11*1, 26*9});
+    label->resize({11*10, 9*3});
+    label->setText("Label");
 
     return true;
 }
