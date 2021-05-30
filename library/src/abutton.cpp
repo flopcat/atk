@@ -42,12 +42,20 @@ ACheckBox::ACheckBox(AWidget *owner) : AButton(owner)
     setChildStyle(BS_AUTOCHECKBOX);
     setChildText("Button");
     setMessageFunction(WM_COMMAND, &ACheckBox::wmCommand);
+
+    childCreated->connect(new ASlot<>(this, [this]() {
+        // re-send the checked message if set in the meantime
+        if (checked_)
+            setChecked(checked_);
+    }));
 }
 
 void ACheckBox::setChecked(bool checked)
 {
     checked_ = checked;
-    SendMessage(childHandle(), BM_SETCHECK, checked ? BST_CHECKED : BST_UNCHECKED, 0);
+    auto ch = childHandle();
+    if (ch)
+    	SendMessage(ch, BM_SETCHECK, checked ? BST_CHECKED : BST_UNCHECKED, 0);
 }
 
 bool ACheckBox::isChecked()
@@ -57,8 +65,10 @@ bool ACheckBox::isChecked()
 
 bool ACheckBox::wmCommand(WPARAM wParam, LPARAM lParam, int &ret)
 {
-    if (HIWORD(wParam) != BN_CLICKED)
+    if (HIWORD(wParam) != BN_CLICKED) {
+    	std::cout << "wmCommand " << wParam << " ignored" << std::endl;
         return false;
+    }
     checked_ = SendMessage(childHandle(), BM_GETCHECK, 0, 0) == BST_CHECKED;
     clicked->send();
     toggled->send(checked_);

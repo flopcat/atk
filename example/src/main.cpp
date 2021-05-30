@@ -48,6 +48,7 @@ bool ExampleWindow::createEvent()
     radio->move({11*1,27*1});
     radio->resize({11*8,27});
     radio->setText("Radio1");
+    radio->setChecked(true);
     radioGroup->append(radio);
 
     radio = new ARadioButton(groupBox);

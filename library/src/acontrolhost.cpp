@@ -49,6 +49,13 @@ const std::string &AControlHost::childText()
     return childText_;
 }
 
+bool AControlHost::sendChildMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
+    if (!child || !child->handle())
+        return false;
+    SendMessage(child->handle(), msg, wParam, lParam);
+    return true;
+}
+
 bool AControlHost::createEvent()
 {
     if (childClass_.empty()) {

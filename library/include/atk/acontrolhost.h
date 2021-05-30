@@ -17,6 +17,8 @@ protected:
     HWND childHandle();
     const std::string &childText();
 
+    bool sendChildMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
     bool createEvent();
     void resizeEvent();
 

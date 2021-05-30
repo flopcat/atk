@@ -62,6 +62,9 @@ void AWidget::create()
                   << "Text        = " << text_ << "\n";
         abort();
     }
+    bool isCustomClass = winClassName != defaultWinClassName;
+    if (isCustomClass)
+    	aboutToCreate->send();
     AWidget *owner = this->parent() ? static_cast<AWidget*>(this->parent()) : nullptr;
     handle_ = CreateWindow(widen(winClassName).c_str(),
                    widen(text_).c_str(),
@@ -76,6 +79,8 @@ void AWidget::create()
     }
     assert(handle_ != nullptr);
     SendMessage(handle_, WM_SETFONT, (WPARAM)defaultFont.handle(), 0);
+    if (isCustomClass)
+    	created->send();
     std::cout << "create finished" << std::endl;
 }
 
@@ -156,7 +161,7 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
     bool parsed = false;
     AWidget *self = reinterpret_cast<AWidget*>(GetWindowLongPtr(hWnd, 0));
 
-    std::cout << id << std::endl;
+    //std::cout << id << std::endl;
     if (id == WM_NCCREATE) {
         CREATESTRUCT *createArgs = reinterpret_cast<CREATESTRUCT*>(lParam);
         self = static_cast<AWidget*>(createArgs->lpCreateParams);

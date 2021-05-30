@@ -48,11 +48,11 @@ int AApplication::run()
             std::cout << "processing pending functions" << std::endl;
             processPendingFunctions();
         } else {
-            std::cout << "dispatching message" << std::endl;
+            //std::cout << "dispatching message" << std::endl;
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        std::cout << "waiting for message" << std::endl;
+        //std::cout << "waiting for message" << std::endl;
     }
     return msg.wParam;
 }
