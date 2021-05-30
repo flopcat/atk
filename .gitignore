@@ -49,3 +49,8 @@ CMakeFiles
 # eclipse files
 .project
 .cproject
+
+# ninja
+build.ninja
+.ninja_deps
+.ninja_log

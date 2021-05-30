@@ -1,34 +1,9 @@
 #ifndef ABUTTON_H
-#include "awidget.h"
+#include <atk/awidget.h>
+#include <atk/acontrolhost.h>
 #include <windows.h>
 #include <set>
 
-class AControlHost : public AWidget
-{
-public:
-    AControlHost(AWidget *parent);
-    ~AControlHost();
-
-protected:
-    void setChildClass(const std::string &childClass);
-    void setChildText(const std::string &childText);
-    void setChildStyle(UINT style);
-    HWND childHandle();
-    const std::string &childText();
-
-    bool createEvent();
-    void resizeEvent();
-
-    ASignal<> *childCreated;
-    ASignal<> *aboutToDestroyChild;
-    ASignal<> *childDestroyed;
-
-private:
-    AWidget *child;
-    std::string childClass_;
-    std::string childText_;
-    UINT childStyle_;
-};
 
 class AButton : public AControlHost
 {
