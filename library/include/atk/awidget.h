@@ -59,6 +59,7 @@ protected:
     static APaintHandle defaultFont;
     static std::string defaultWinClassName;
     static ATOM registerClass;
+    static BOOL commonControls;
     std::string winClassName;
     MessageMap messageFunctions;
 

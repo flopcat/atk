@@ -22,7 +22,7 @@ ATOM AWidget::registerClass = []() -> ATOM {
     return a;
 }();
 
-BOOL commonControls = []() -> BOOL {
+BOOL AWidget::commonControls = []() -> BOOL {
     INITCOMMONCONTROLSEX icce;
     icce.dwSize = sizeof(icce);
     icce.dwICC = ICC_WIN95_CLASSES;
