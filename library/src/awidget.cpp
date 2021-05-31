@@ -1,5 +1,7 @@
 #include <assert.h>
 #include <iostream>
+#include <windows.h>
+#include <commctrl.h>
 #include "atk/utf8.h"
 #include "atk/awidget.h"
 #include "atk/agraphics.h"
@@ -15,10 +17,16 @@ ATOM AWidget::registerClass = []() -> ATOM {
                             LoadCursor(nullptr, IDC_ARROW),
                             (HBRUSH)COLOR_BTNFACE+1, nullptr,
                             L"AWidgetClass", 0 };
-    std::cout << defaultWinClassName << std::endl;
     ATOM a = RegisterClassEx(&winClass);
-    std::cout << a << narrow(widen(defaultWinClassName)) << std::endl;
+        std::cout << "registered window class " << defaultWinClassName << ": " << a << std::endl;
     return a;
+}();
+
+BOOL commonControls = []() -> BOOL {
+    INITCOMMONCONTROLSEX icce;
+    icce.dwSize = sizeof(icce);
+    icce.dwICC = ICC_WIN95_CLASSES;
+    return InitCommonControlsEx(&icce);
 }();
 
 AWidget::AWidget(AWidget *owner) : AObject(owner)
@@ -64,7 +72,7 @@ void AWidget::create()
     }
     bool isCustomClass = winClassName != defaultWinClassName;
     if (isCustomClass)
-    	aboutToCreate->send();
+        aboutToCreate->send();
     AWidget *owner = this->parent() ? static_cast<AWidget*>(this->parent()) : nullptr;
     handle_ = CreateWindow(widen(winClassName).c_str(),
                    widen(text_).c_str(),
@@ -80,7 +88,7 @@ void AWidget::create()
     assert(handle_ != nullptr);
     SendMessage(handle_, WM_SETFONT, (WPARAM)defaultFont.handle(), 0);
     if (isCustomClass)
-    	created->send();
+        created->send();
     std::cout << "create finished" << std::endl;
 }
 
@@ -168,11 +176,11 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
         SetWindowLongPtr(hWnd, 0, reinterpret_cast<LONG_PTR>(self));
         std::cout << "set handle to " << hWnd;
         self->handle_ = hWnd;
-        self->aboutToCreate->send();        
+        self->aboutToCreate->send();
     }
     if (!self)
         goto last;
-    
+
     switch (id) {
     case WM_NCCREATE: {
         break;

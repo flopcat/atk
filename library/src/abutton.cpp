@@ -6,7 +6,7 @@ AButton::AButton(AWidget *owner) : AControlHost(owner)
     clicked = new ASignal<>(this);
     buttonClicked = new ASignal<AButton*>(this);
 
-    setChildClass("BUTTON");    
+    setChildClass("BUTTON");
     setChildText("Button");
     setMessageFunction(WM_COMMAND, &AButton::wmCommand);
 }
@@ -38,7 +38,7 @@ ACheckBox::ACheckBox(AWidget *owner) : AButton(owner)
     buttonToggled = new ASignal<ACheckBox*,bool>(this);
     checked_ = false;
 
-    setChildClass("BUTTON");    
+    setChildClass("BUTTON");
     setChildStyle(BS_AUTOCHECKBOX);
     setChildText("Button");
     setMessageFunction(WM_COMMAND, &ACheckBox::wmCommand);
@@ -102,7 +102,7 @@ void ARadioGroup::append(ARadioButton* button)
         button->aboutToDeleteObject->connect(radio_deletedSlot);
         button->buttonClicked->connect(radio_clickedSlot);
         radioButtons.insert(button);
-    }    
+    }
 }
 
 void ARadioGroup::remove(ARadioButton* button)

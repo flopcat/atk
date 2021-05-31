@@ -137,4 +137,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
     });
     window.destroyed->connect(&terminateMe);
     return app.run();
+
 }

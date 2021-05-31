@@ -108,7 +108,7 @@ bool AApplication::processPendingFunctions()
         return false;
 
     std::cout << "processing pending functions" << std::endl;
-    
+
     // Actually, a peculiar thing may happen here if calling a
     // pendingFunction results in the deletion of the supposed
     // function, or a different pending function.
