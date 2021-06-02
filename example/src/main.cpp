@@ -135,7 +135,6 @@ bool ExampleWindow::createEvent()
         std::cout << "multiline changed to " << editor->text() << std::endl;
     }));
 
-
     return true;
 }
 
@@ -151,7 +150,7 @@ void ExampleWindow::paintEvent()
     p.setBgColor(bg);
     p.setFgColor(AColor(0x5a, 0x5a, 0x5a));
     p.setFont(f);
-    p.drawText(11*1, 9*26, "This text is drawn with the painting api.");
+    p.drawText(11*1, 9*26, "This text is drawn with the painting API.");
 }
 
 
