@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <atk/aapplication.h>
 #include <atk/abutton.h>
+#include <atk/aeditor.h>
 #include <atk/alabel.h>
 #include <atk/awindow.h>
 
@@ -107,6 +108,33 @@ bool ExampleWindow::createEvent()
     label->resize({11*10, 9*2});
     label->setFrameEdge(ALabel::EtchedFrame);
     label->setText("EtchedFrame");
+
+    auto editor = new AEditor(this);
+    editor->move({11*23, 9*1 });
+    editor->resize({11*10, 9*2 + 1});
+    editor->setText("Editor");
+    editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {
+        std::cout << "editor changed to " << editor->text() << std::endl;
+    }));
+
+    editor = new AEditor(this);
+    editor->move({11*23, 9*4 });
+    editor->resize({11*10, 9*2 + 1});
+    editor->setEditorStyle(AEditor::PasswordEditor);
+    editor->setText("Password");
+    editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {
+        std::cout << "password changed to " << editor->text() << std::endl;
+    }));
+
+    editor = new AEditor(this);
+    editor->move({11*23, 9*7 });
+    editor->resize({11*10, 9*18});
+    editor->setEditorStyle(AEditor::MultilineEditor);
+    editor->setText("Multiline Text Editor");
+    editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {
+        std::cout << "multiline changed to " << editor->text() << std::endl;
+    }));
+
 
     return true;
 }
