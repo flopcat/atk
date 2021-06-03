@@ -11,7 +11,6 @@ add_executable(example WIN32 ${sources} ${headers} ${manifests} ${resources})
 target_compile_definitions(example PRIVATE UNICODE _UNICODE NOMINMAX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_SHARED_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
 target_include_directories(example PRIVATE ../library/include)
@@ -22,7 +21,7 @@ set_target_properties(example PROPERTIES
     LINKER_LANGUAGE CXX
     ARCHIVE_OUTPUT_DIRECTORY "./lib"
     LIBRARY_OUTPUT_DIRECTORY "./lib"
-    RUNTIME_OUTPUT_DIRECTORY "./lib")
+    RUNTIME_OUTPUT_DIRECTORY "./bin")
 
 # Custom targets for some editors
 add_custom_target(ExHeaders SOURCES ${headers})

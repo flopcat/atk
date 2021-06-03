@@ -9,7 +9,6 @@ add_library(atk SHARED ${sources} ${headers})
 target_compile_definitions(atk PRIVATE UNICODE _UNICODE NOMINMAX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_SHARED_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
 target_include_directories(atk PRIVATE include)
@@ -20,7 +19,7 @@ set_target_properties(atk PROPERTIES
     LINKER_LANGUAGE CXX
     ARCHIVE_OUTPUT_DIRECTORY "./lib"
     LIBRARY_OUTPUT_DIRECTORY "./lib"
-    RUNTIME_OUTPUT_DIRECTORY "./lib")
+    RUNTIME_OUTPUT_DIRECTORY "./bin")
 
 # Custom targets for some editors
 add_custom_target(Headers SOURCES ${headers})
