@@ -9,26 +9,42 @@ class ExampleWindow : public AWindow {
 public:
     ExampleWindow(AWidget *owner);
 private:
+    // event callbacks
     virtual bool createEvent() override;
     virtual void paintEvent() override;
+
+    // slot callbacks
+    void check_checked(bool checked);
 };
 
 ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
 {
+    // Set the object name, useful for debugging purposes.
     setObjectName("ExampleWindow");
+
+    // Resize and move the window into a suitable location.
     resize({640, 480});
     move({320, 240});
+
+    // Set a standard window style.  This is set in AWindow as well, so this
+    // can be dropped if you are fine with the defaults.  Changing the style is
+    // how you would create a fixed-size window, for example.
     setStyle(WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU);
 }
 
+// createEvent is called when processing the WM_CREATE message.  Return false
+// when you don't want the created event to be sent.  The default return is
+// true.
 bool ExampleWindow::createEvent()
 {
+    // Column 1 - buttons and derivatives
     std::cout << "Inside window createEvent" << std::endl;
     auto button = new AButton(this);
     button->move({11*1,9*1});
     button->resize({110,27});
     button->setText("Test");
     button->clicked->connect(new ASlot<>(this, []() {
+        // Print a message whenever the button is clicked
         std::cout << "button clicked" << std::endl;
     }));
 
@@ -36,14 +52,18 @@ bool ExampleWindow::createEvent()
     check->move({11*1,9*5});
     check->resize({110,27});
     check->setText("Test");
-    check->toggled->connect(new ASlot<bool>(this, [](bool checked) {
-        std::cout << "button checked " << (checked ? "y" : "n") << std::endl;
-    }));
+    check->toggled->connect(new ASlot<bool>(this, &ExampleWindow::check_checked));
+    // ^ This code could be in a lambda like the rest of the examples like so:
+    // new ASlot<bool>(this, [](bool checked) { ... }).  But to give an example
+    // of this method we are doing it this way just this once.  In fact in
+    // large code-bases you should probably use member functions.
 
     auto groupBox = new AGroupBox(this);
     groupBox->move({11*1,9*9});
     groupBox->resize({11*10, 9*3*5+9});
 
+    // ARadioGroup takes care of ensuring that only one associated radio button
+    // is selected at a time.
     auto radioGroup = new ARadioGroup(this);
     auto radio = new ARadioButton(groupBox);
     radio->move({11*1,27*1});
@@ -74,6 +94,7 @@ bool ExampleWindow::createEvent()
         std::cout << "button " << radio->text() << " selected" << std::endl;
     }));
 
+    // Column 2 - label and frames
     auto label = new ALabel(this);
     label->move({11*12, 9*1});
     label->resize({11*10, 9*2});
@@ -109,6 +130,7 @@ bool ExampleWindow::createEvent()
     label->setFrameEdge(ALabel::EtchedFrame);
     label->setText("EtchedFrame");
 
+    // Column 3 - editors
     auto editor = new AEditor(this);
     editor->move({11*23, 9*1 });
     editor->resize({11*10, 9*2 + 1});
@@ -138,31 +160,61 @@ bool ExampleWindow::createEvent()
     return true;
 }
 
+// paintEvent - sent during WM_PAINT, use this for decorating your widget.
 void ExampleWindow::paintEvent()
 {
+    // Note that GDI resources aren't created until an APainter requests them
+    // inside a set* call.  Likewise, changing a paint object's attributes
+    // won't take effect until it is set into an APainter.  To create a GDI
+    // object out of them yourself, create one with APaintHandle(AFont etc).
+    // APaintHandle cleans up the GDI object when its destructor is called.
+
+    // Create a painter object using this window's HWND.  You can also create
+    // an APainter if you have a DC.
     APainter p(handle());
+
+    // Set our bg color to the color of buttons, usually a light gray.
     AColor bg(GetSysColor(COLOR_BTNFACE));
 
+    // Fill the background with the button color
     ABrush b(bg);
     p.setBrush(b);
     p.fillRect(ARect(0,0,size().width(),size().height()));
-    AFont f("Segoe UI", 16, 400);
+
+    // Draw some text beneath the column 1 controls
+    AFont f("Segoe UI", 16, 400);  // font name, height, weight
     p.setBgColor(bg);
     p.setFgColor(AColor(0x5a, 0x5a, 0x5a));
     p.setFont(f);
     p.drawText(11*1, 9*26, "This text is drawn with the painting API.");
 }
 
+// This is invoked from inside ACheckBox's wmCommand function.
+void ExampleWindow::check_checked(bool checked)
+{
+    std::cout << "button checked " << (checked ? "y" : "n") << std::endl;
+}
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
+    // Create an AApplication instance, this is responsible for the message
+    // pump and processing deferred functions (called "pending functions").
+    // There are constructors for argv, argc as well.
     AApplication app(hInstance, nCmdShow);
+
+    // Create the example window.  Because this is deleted when it goes out of
+    // scope, it has no parent object and we set the owner to nullptr.
     ExampleWindow window(nullptr);
+
+    // Tell the application to terminate when the example window is destroyed.
+    // Again the thing has no owner so we set that to nullptr.
     ASlot<> terminateMe(nullptr, [&]() {
         app.quit();
     });
     window.destroyed->connect(&terminateMe);
+
+    // Run the message pump
     return app.run();
 
 }

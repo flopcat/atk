@@ -116,7 +116,7 @@ public:
     void setColor(const AColor &color) { color_ = color; }
     int width() { return width_; }
     void setWidth(int width) { width_ = width; }
-    
+
 private:
     AColor color_;
     int width_;
@@ -130,7 +130,7 @@ public:
     }
     AColor color() { return color_; }
     void setColor(const AColor &color) { color_ = color; }
-    
+
 private:
     AColor color_;
 };
@@ -156,14 +156,13 @@ public:
     void setItalic(bool italic) { italic_ = italic; }
     bool underline() { return underline_; }
     void setUnderline(bool underline) { underline_ = underline; }
-    
+
 private:
     std::string name_;
     int height_;
     int weight_;
     bool italic_;
     bool underline_;
-    
 };
 
 class ABitmap : public APaintObject {
