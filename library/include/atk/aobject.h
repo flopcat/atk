@@ -200,7 +200,6 @@ public:
     // this slot.
     virtual ~ASlot() {
         checkCanary();
-        std::cout << connections.size();
         if (connections.empty())
             return;
         while (!connections.empty())
@@ -223,7 +222,6 @@ protected:
     // Detach a signal from this slot.  Removes the signal from the connection
     // map, with the signal's slot index of this slot.
     void detach(ASignal<Args...> *signal) {
-        std::cout << "erasing connection" << std::endl;
         connections.erase(signal);
     }
 
