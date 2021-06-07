@@ -8,6 +8,8 @@ AObject::AObject(AObject *owner)
     setObjectName("Object");
     aboutToDelete = new ASignal<>(this);
     aboutToDeleteObject = new ASignal<AObject*>(this);
+    // deleted and objectDeleted are declared without an explicit owner because
+    // we need to fire them after we delete every other attached AThing.
     deleted = new ASignal<>(nullptr);
     objectDeleted = new ASignal<AObject*>(nullptr);
 
