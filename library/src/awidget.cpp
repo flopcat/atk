@@ -228,7 +228,7 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
     }
     if (id == WM_NCDESTROY) {
         self->destroyed->send();
-        SetWindowLongPtrA(hWnd, 0, 0);
+        SetWindowLongPtr(hWnd, 0, 0);
         if (self->vitality == KilledBySystem && self->parent())
             delete self;
     }
