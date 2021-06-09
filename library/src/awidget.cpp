@@ -34,6 +34,7 @@ AWidget::AWidget(AWidget *owner) : AObject(owner)
     handle_ = nullptr;
     size_ = ASize(640, 480);
     position_ = APoint(0, 0);
+    style_ = 0;
     vitality = StillAlive;
     visible = false;
     winClassName = defaultWinClassName;
@@ -209,7 +210,6 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
         p.setBrush(b);
         auto sz = self->size();
         p.fillRect(ARect(0,0,sz.width(),sz.height()));
-        std::cout << "erased background" << std::endl;
         return 1;
     }
     case WM_PAINT:
