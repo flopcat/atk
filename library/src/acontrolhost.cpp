@@ -7,6 +7,7 @@ AControlHost::AControlHost(AWidget *owner) : AWidget(owner)
     setObjectName("Control Host Object");
     setStyle(defaultChildStyle);
     child = nullptr;
+    childStyle_ = 0;
     // Create slots
     childCreated = new ASignal<>(this);
     aboutToDestroyChild = new ASignal<>(this);
