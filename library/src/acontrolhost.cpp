@@ -49,6 +49,17 @@ const std::string &AControlHost::childText()
     return childText_;
 }
 
+void AControlHost::updateChildText()
+{
+    if (!childHandle())
+        return;
+    int len = GetWindowTextLength(childHandle()) + 1;
+    std::wstring str;
+    str.reserve(len);
+    GetWindowText(childHandle(), const_cast<wchar_t*>(str.c_str()), len);
+    childText_ = narrow(str);
+}
+
 bool AControlHost::sendChildMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
     if (!child || !child->handle())
         return false;

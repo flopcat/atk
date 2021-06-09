@@ -16,6 +16,7 @@ protected:
     void setChildStyle(UINT style);
     HWND childHandle();
     const std::string &childText();
+    void updateChildText();
 
     bool sendChildMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 

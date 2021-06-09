@@ -10,7 +10,7 @@ public:
 
     AEditor(AWidget *parent);
 
-    const std::string text();
+    const std::string &text();
     void setText(const std::string &text);
     void setEditorStyle(EditorStyle editor);
 

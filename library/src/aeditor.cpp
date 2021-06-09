@@ -13,16 +13,10 @@ AEditor::AEditor(AWidget *parent) :
     editorTextChanged = new ASignal<AEditor*>(this);
 }
 
-const std::string AEditor::text()
+const std::string &AEditor::text()
 {
-    if (!childHandle()) {
-        return childText();
-    }
-    int len = GetWindowTextLength(childHandle()) + 1;
-    std::wstring str;
-    str.reserve(len);
-    GetWindowText(childHandle(), const_cast<wchar_t*>(str.c_str()), len);
-    return narrow(str);
+    updateChildText();
+    return childText();
 }
 
 void AEditor::setText(const std::string &text)
