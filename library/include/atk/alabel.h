@@ -8,6 +8,7 @@
 #define ALABEL_H
 #include <atk/awidget.h>
 #include <atk/acontrolhost.h>
+#include <atk/agraphics.h>
 
 
 class ALabel : public AControlHost
@@ -19,6 +20,10 @@ public:
     const std::string &text();
     void setText(const std::string &text);
     void setFrameEdge(FrameEdge edge);
+    void setColor(const AColor &color);
+private:
+    bool wmCtlColorStatic(WPARAM wParam, LPARAM lParam, int &ret);
+    AColor color;
 };
 
 #endif // ALABEL_H

@@ -130,6 +130,24 @@ bool ExampleWindow::createEvent()
     label->setFrameEdge(ALabel::EtchedFrame);
     label->setText("EtchedFrame");
 
+    label = new ALabel(this);
+    label->move({11*12, 9*19});
+    label->resize({11*10, 9*2});
+    label->setColor({255, 0, 0});
+    label->setText("Red Label");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*21});
+    label->resize({11*10, 9*2});
+    label->setColor({0, 255, 0});
+    label->setText("Green Label");
+
+    label = new ALabel(this);
+    label->move({11*12, 9*23});
+    label->resize({11*10, 9*2});
+    label->setColor({0, 0, 255});
+    label->setText("Blue Label");
+
     // Column 3 - editors
     auto editor = new AEditor(this);
     editor->move({11*23, 9*1 });

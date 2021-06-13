@@ -6,6 +6,7 @@ ALabel::ALabel(AWidget *owner) : AControlHost(owner)
 
     setChildClass("STATIC");
     setChildText("Label");
+    setMessageFunction(WM_CTLCOLORSTATIC, &ALabel::wmCtlColorStatic);
 }
 
 const std::string &ALabel::text()
@@ -41,4 +42,20 @@ void ALabel::setFrameEdge(FrameEdge edge)
 		break;
 	}
 	setChildStyle(style);
+}
+
+void ALabel::setColor(const AColor &color)
+{
+    this->color = color;
+}
+
+bool ALabel::wmCtlColorStatic(WPARAM wParam, LPARAM lParam, int &ret)
+{
+    if (color.isClear())
+        return false;
+    APainter p((HDC)wParam);
+    p.setFgColor(color);
+    p.setBgColor(GetSysColor(COLOR_BTNFACE));
+    ret = (int)GetSysColorBrush(COLOR_BTNFACE);
+    return true;
 }
