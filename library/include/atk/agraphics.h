@@ -18,15 +18,17 @@ public:
     AColor() : q({0,0,0,0}) {}
     AColor(const AColor &other) { q = other.q; }
     AColor(COLORREF color) { setColor(color); }
-    AColor(int r, int g, int b) { q = { (BYTE)r, (BYTE)g, (BYTE)b, 0 }; }
+    AColor(int r, int g, int b) { q = { (BYTE)r, (BYTE)g, (BYTE)b, 255 }; }
     COLORREF color() const { return RGB(q.rgbRed, q.rgbGreen, q.rgbBlue); }
     BYTE red() const { return q.rgbRed; }
     BYTE green() const { return q.rgbGreen; }
     BYTE blue() const { return q.rgbBlue; }
-    void setColor(COLORREF ref) { q = { GetRValue(ref), GetGValue(ref), GetBValue(ref), 0 }; }
-    void setRed(BYTE r) { q.rgbRed = r; }
-    void setGreen(BYTE g) { q.rgbGreen = g; }
-    void setBlue(BYTE b) { q.rgbBlue = b; }
+    bool isClear() const { return q.rgbReserved == 0; }
+    void setColor(COLORREF ref) { q = { GetRValue(ref), GetGValue(ref), GetBValue(ref), 255 }; }
+    void setRed(BYTE r) { q.rgbRed = r; q.rgbReserved = 255; }
+    void setGreen(BYTE g) { q.rgbGreen = g; q.rgbReserved = 255; }
+    void setBlue(BYTE b) { q.rgbBlue = b; q.rgbReserved = 255; }
+    void clear() { q = { 0, 0, 0, 0 }; }
 private:
     RGBQUAD q;
 };

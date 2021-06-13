@@ -61,7 +61,7 @@ void AWidget::setWindowClass(const std::string &windowClass)
 
 void AWidget::create()
 {
-    std::cout << "create called" << winClassName << std::endl;
+    std::cout << "create called with class " << winClassName << std::endl;
     if (RegisterClass == RegisterClassW) {
         std::cout << "unicode mode" << std::endl;
     }
@@ -175,7 +175,7 @@ LRESULT __stdcall AWidget::wndProc(HWND hWnd, UINT id, WPARAM wParam, LPARAM lPa
         CREATESTRUCT *createArgs = reinterpret_cast<CREATESTRUCT*>(lParam);
         self = static_cast<AWidget*>(createArgs->lpCreateParams);
         SetWindowLongPtr(hWnd, 0, reinterpret_cast<LONG_PTR>(self));
-        std::cout << "set handle to " << hWnd;
+        std::cout << "set handle to " << hWnd << std::endl;
         self->handle_ = hWnd;
         self->aboutToCreate->send();
     }
