@@ -1,6 +1,7 @@
 #ifndef AGRAPHICS_H
 #define AGRAPHICS_H
 #include <string>
+#include <atk/aapplication.h>
 #include <atk/utf8.h>
 #include <windows.h>
 
@@ -90,22 +91,6 @@ public:
     virtual HGDIOBJ makeNativeHandle() const = 0;
 };
 
-class APaintHandle {
-public:
-	explicit APaintHandle(const APaintObject &obj) {
-		h = obj.makeNativeHandle();
-	}
-	~APaintHandle() {
-		if (!h)
-			return;
-		DeleteObject(h);
-		h = nullptr;
-	}
-	HGDIOBJ handle() { return h; }
-private:
-	HGDIOBJ h = nullptr;
-};
-
 class APen : public APaintObject {
 public:
     APen(const AColor &c = AColor(), int width = 0) : APaintObject(), color_(c), width_(width) {}
@@ -181,6 +166,78 @@ private:
     int height_;
 };
 
+template <typename T, WINBOOL (*WINAPI dtor)(T)>
+class APaintHandle_T {
+public:
+    explicit APaintHandle_T(const APaintObject &obj) {
+        h = obj.makeNativeHandle();
+    }
+    explicit APaintHandle_T(T handle) {
+        h = handle;
+    }
+    virtual ~APaintHandle_T() {
+        if (!h)
+            return;
+        dtor(h);
+        h = nullptr;
+    }
+    T handle() { return h; }
+protected:
+    T h = nullptr;
+};
+
+typedef APaintHandle_T<HGDIOBJ, &DeleteObject> APaintHandle;
+
+template<typename T, UINT type, WINBOOL (*WINAPI dtor)(T)>
+class APaintResource
+{
+public:
+    APaintResource() {}
+    APaintResource(UINT resourceId) : resourceId(resourceId) {}
+    APaintResource(std::string fileName) : fileName(fileName) {}
+    APaintResource(const APaintResource<T,type,dtor> &h) {
+        resourceId = h.resourceId;
+        fileName = h.fileName;
+        handle_ = CopyImage(h.handle_, type, 0, 0, LR_COPYFROMRESOURCE);
+    }
+    APaintResource(APaintResource<T,type,dtor> &&h) {
+        resourceId = std::move(h.resourceId);
+        fileName = std::move(h.fileName);
+        handle_ = std::move(h.handle_);
+        h.resourceId = 0;
+        h.handle_ = NULL;
+    }
+    virtual ~APaintResource() {
+        if (handle_)
+            dtor(handle_);
+    }
+    T handle() {
+        if (!handle_)
+            load();
+        return handle_;
+    }
+    void clear() {
+        if (handle_) {
+            dtor(handle_);
+            handle_ = NULL;
+        }
+    }
+protected:
+    UINT resourceId = 0;
+    std::string fileName;
+    T handle_;
+
+    void load() {
+        if (resourceId)
+            handle_ = LoadImage(aApp->handle(), MAKEINTRESOURCE(resourceId), type, 0, 0, LR_SHARED);
+        else
+            handle_ = LoadImage(aApp->handle(), widen(fileName).c_str(), type, 0, 0, LR_LOADFROMFILE | LR_SHARED);
+    }
+};
+
+typedef APaintResource<HGDIOBJ, IMAGE_BITMAP, DeleteObject> ABitmapResource;
+typedef APaintResource<HCURSOR, IMAGE_CURSOR, DestroyCursor> ACursorResource;
+typedef APaintResource<HICON, IMAGE_ICON, DestroyIcon> AIconResource;
 
 class APainter {
 public:
@@ -248,6 +305,5 @@ private:
     HGDIOBJ orgRegion;
     HGDIOBJ nowBrush;
 };
-
 
 #endif // AGRAPHICS_H
