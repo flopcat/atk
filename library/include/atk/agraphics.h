@@ -24,7 +24,7 @@ public:
     BYTE green() const { return q.rgbGreen; }
     BYTE blue() const { return q.rgbBlue; }
     bool isClear() const { return q.rgbReserved == 0; }
-    void setColor(COLORREF ref) { q = { GetRValue(ref), GetGValue(ref), GetBValue(ref), 255 }; }
+    void setColor(COLORREF ref) { q = { GetBValue(ref), GetGValue(ref), GetRValue(ref), 255 }; }
     void setColor(int r, int g, int b) { q = { (BYTE)b, (BYTE)g, (BYTE)r, 255 }; }
     void setRed(BYTE r) { q.rgbRed = r; q.rgbReserved = 255; }
     void setGreen(BYTE g) { q.rgbGreen = g; q.rgbReserved = 255; }
