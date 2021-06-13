@@ -30,6 +30,10 @@ ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
     // can be dropped if you are fine with the defaults.  Changing the style is
     // how you would create a fixed-size window, for example.
     setStyle(WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU);
+
+    // Set the window caption.  This function can also be called on regular
+    // widgets to set their text.
+    setText("Example Window");
 }
 
 // createEvent is called when processing the WM_CREATE message.  Return false
