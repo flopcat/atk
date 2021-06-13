@@ -8,6 +8,7 @@ AControlHost::AControlHost(AWidget *owner) : AWidget(owner)
     setStyle(defaultChildStyle);
     child = nullptr;
     childStyle_ = 0;
+    childExStyle_ = 0;
     // Create slots
     childCreated = new ASignal<>(this);
     aboutToDestroyChild = new ASignal<>(this);
@@ -38,6 +39,13 @@ void AControlHost::setChildStyle(UINT style)
     childStyle_ = style;
     if (child)
         child->setStyle(style);
+}
+
+void AControlHost::setChildExStyle(UINT exStyle)
+{
+    childExStyle_ = exStyle;
+    if (child)
+        child->setExStyle(exStyle);
 }
 
 HWND AControlHost::childHandle()
@@ -82,6 +90,7 @@ bool AControlHost::createEvent()
     child->setWindowClass(childClass_);
     child->setText(childText_);
     child->setStyle(childStyle_ | WS_CHILD | WS_VISIBLE);
+    child->setExStyle(childExStyle_);
     child->resize(size());
     child->created->connect(new ASlot<>(this, [this]() { childCreated->send(); }));
     child->show();

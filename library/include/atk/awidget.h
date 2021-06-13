@@ -25,6 +25,7 @@ public:
     void resize(const ASize size);
     void move(const APoint where);
     void setStyle(UINT style);
+    void setExStyle(UINT exStyle);
     const std::string& text();
     void setText(const std::string &text);
 
@@ -73,6 +74,7 @@ private:
     ASize size_;
     APoint position_;
     UINT style_;
+    UINT exStyle_;
 
     bool visible;
 

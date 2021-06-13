@@ -35,6 +35,7 @@ AWidget::AWidget(AWidget *owner) : AObject(owner)
     size_ = ASize(640, 480);
     position_ = APoint(0, 0);
     style_ = 0;
+    exStyle_ = 0;
     vitality = StillAlive;
     visible = false;
     winClassName = defaultWinClassName;
@@ -75,7 +76,8 @@ void AWidget::create()
     if (isCustomClass)
         aboutToCreate->send();
     AWidget *owner = this->parent() ? static_cast<AWidget*>(this->parent()) : nullptr;
-    handle_ = CreateWindow(widen(winClassName).c_str(),
+    handle_ = CreateWindowEx(exStyle_,
+                   widen(winClassName).c_str(),
                    widen(text_).c_str(),
                    style_,
                    position_.x(), position_.y(),
@@ -149,6 +151,17 @@ void AWidget::setStyle(UINT style)
                      | SWP_NOSIZE | SWP_FRAMECHANGED | (visible ?: SWP_SHOWWINDOW));
     }
     style_ = style;
+}
+
+void AWidget::setExStyle(UINT exStyle)
+{
+    if (handle_) {
+        SetWindowLong(handle_, GWL_EXSTYLE, exStyle);
+        SetWindowPos(handle_, 0, 0, 0, 0, 0,
+                     SWP_ASYNCWINDOWPOS | SWP_NOOWNERZORDER | SWP_NOMOVE
+                     | SWP_NOSIZE | SWP_FRAMECHANGED | (visible ?: SWP_SHOWWINDOW));
+    }
+    exStyle_ = exStyle;
 }
 
 const std::string& AWidget::text()

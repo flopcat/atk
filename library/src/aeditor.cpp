@@ -7,6 +7,7 @@ AEditor::AEditor(AWidget *parent) :
     setChildText("Editor");
     setChildClass("EDIT");
     setChildStyle(WS_BORDER);
+    setChildExStyle(WS_EX_CLIENTEDGE);
     setMessageFunction(WM_COMMAND, &AEditor::wmCommand);
 
     textChanged = new ASignal<>(this);
@@ -39,6 +40,11 @@ void AEditor::setEditorStyle(EditorStyle editor)
         break;
     }
     setChildStyle(WS_BORDER | style);
+}
+
+void AEditor::setThinBorder(bool thin)
+{
+    setChildExStyle(thin ? 0 : WS_EX_CLIENTEDGE);
 }
 
 bool AEditor::wmCommand(WPARAM wParam, LPARAM lParam, int &ret)

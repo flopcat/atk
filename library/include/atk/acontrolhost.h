@@ -14,6 +14,7 @@ protected:
     void setChildClass(const std::string &childClass);
     void setChildText(const std::string &childText);
     void setChildStyle(UINT style);
+    void setChildExStyle(UINT exStyle);
     HWND childHandle();
     const std::string &childText();
     void updateChildText();
@@ -34,6 +35,7 @@ private:
     std::string childClass_;
     std::string childText_;
     UINT childStyle_;
+    UINT childExStyle_;
 };
 
 #endif /* ACONTROLHOST_H */

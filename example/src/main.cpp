@@ -153,13 +153,14 @@ bool ExampleWindow::createEvent()
     editor->move({11*23, 9*1 });
     editor->resize({11*10, 9*2 + 1});
     editor->setText("Editor");
+    editor->setThinBorder(true);
     editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {
         std::cout << "editor changed to " << editor->text() << std::endl;
     }));
 
     editor = new AEditor(this);
     editor->move({11*23, 9*4 });
-    editor->resize({11*10, 9*2 + 1});
+    editor->resize({11*10, 9*2 + 5});
     editor->setEditorStyle(AEditor::PasswordEditor);
     editor->setText("Password");
     editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {

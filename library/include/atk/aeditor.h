@@ -13,6 +13,7 @@ public:
     const std::string &text();
     void setText(const std::string &text);
     void setEditorStyle(EditorStyle editor);
+    void setThinBorder(bool thin);
 
     ASignal<> *textChanged;
     ASignal<AEditor*> *editorTextChanged;
