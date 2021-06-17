@@ -21,12 +21,19 @@ feel free to comment those out before redistribution.
 
 ## Coding style
 
-We try to stick to best practice, but may diverge here and there.  Here are
-some good reads which may inspire you if you wish to extend this toolkit, but
-we don't stick to them.
+We try to stick to K&R, but may diverge here and there.  Consider the following
+documents, where we tend to defer to the first over the second.
 
 * [C++ style](http://geosoft.no/development/cppstyle.html)
+* [Qt coding style](https://wiki.qt.io/Qt_Coding_Style)
+
+## Extending
+
+This is a basic toolkit and was designed by its first author when they were
+rewriting a VB3 app. (YAGNI)  As such, not every conceivable Windows control is
+implemented.  It is however open for patches.  Here are some good reads which
+may inspire you if you wish to extend this toolkit:
+
 * [The Little Manual of API Design](https://people.mpi-inf.mpg.de/~jblanche/api-design.pdf)
 * [Digia API design](https://doc.qt.io/archives/qq/qq13-apis.html)
-* [Qt coding style](https://wiki.qt.io/Qt_Coding_Style)
 
