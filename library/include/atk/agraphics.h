@@ -201,13 +201,13 @@ public:
     APaintResource(const APaintResource<T,type,dtor> &h) {
         resourceId = h.resourceId;
         fileName = h.fileName;
-        handle_ = CopyImage(h.handle_, type, 0, 0, LR_COPYFROMRESOURCE);
     }
     APaintResource(APaintResource<T,type,dtor> &&h) {
         resourceId = std::move(h.resourceId);
         fileName = std::move(h.fileName);
         handle_ = std::move(h.handle_);
         h.resourceId = 0;
+        h.fileName.clear();
         h.handle_ = NULL;
     }
     virtual ~APaintResource() {
@@ -225,16 +225,25 @@ public:
             handle_ = NULL;
         }
     }
+    operator bool() {
+        return resourceId != 0 || !fileName.empty();
+    }
+    APaintResource<T,type,dtor> &operator =(const APaintResource<T,type,dtor> &h) {
+        clear();
+        resourceId = h.resourceId;
+        fileName = h.fileName;
+        return *this;
+    }
 protected:
     UINT resourceId = 0;
     std::string fileName;
-    T handle_;
+    T handle_ = NULL;
 
     void load() {
         if (resourceId)
-            handle_ = LoadImage(aApp->handle(), MAKEINTRESOURCE(resourceId), type, 0, 0, LR_SHARED);
+            handle_ = (T)LoadImage(aApp->handle(), MAKEINTRESOURCE(resourceId), type, 0, 0, LR_SHARED);
         else
-            handle_ = LoadImage(aApp->handle(), widen(fileName).c_str(), type, 0, 0, LR_LOADFROMFILE | LR_SHARED);
+            handle_ = (T)LoadImage(aApp->handle(), widen(fileName).c_str(), type, 0, 0, LR_LOADFROMFILE | LR_SHARED);
     }
 };
 
