@@ -2,6 +2,7 @@
 #include <atk/aapplication.h>
 #include <atk/abutton.h>
 #include <atk/aeditor.h>
+#include <atk/agraphics.h>
 #include <atk/alabel.h>
 #include <atk/awindow.h>
 
@@ -9,6 +10,8 @@ class ExampleWindow : public AWindow {
 public:
     ExampleWindow(AWidget *owner);
 private:
+    AIconResource icon;
+
     // event callbacks
     virtual bool createEvent() override;
     virtual void paintEvent() override;
@@ -17,7 +20,8 @@ private:
     void check_checked(bool checked);
 };
 
-ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
+ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner),
+    icon(2) // use resource number 2, see resource file
 {
     // Set the object name, useful for debugging purposes.
     setObjectName("ExampleWindow");
@@ -34,6 +38,9 @@ ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner)
     // Set the window caption.  This function can also be called on regular
     // widgets to set their text.
     setText("Example Window");
+
+    // Set the window icon
+    setIcon(icon);
 }
 
 // createEvent is called when processing the WM_CREATE message.  Return false
