@@ -13,8 +13,8 @@ our design, and our object system only goes as far as object ownership with
 automatic child destruction of heap objects.  However, it is hoped that your
 use of this library will still be an enjoyable one.
 
-Compile with mingw32 and -DUNICODE.  Some efforts are made to ensure this runs
-similarly in Windows and in wine.
+Compile with mingw32 and -DNOMINMAX and -DUNICODE.  Some efforts are made to
+ensure this runs similarly in Windows and in wine.
 
 Example program included.  Sources may include testing/tracing statements, so
 feel free to comment those out before redistribution.
@@ -30,10 +30,9 @@ documents, where we tend to defer to the first over the second.
 ## Extending
 
 This is a basic toolkit and was designed by its first author when they were
-rewriting a VB3 app. (YAGNI)  As such, not every conceivable Windows control is
-implemented.  It is however open for patches.  Here are some good reads which
-may inspire you if you wish to extend this toolkit:
+rewriting a VB3 app.  As such, not every conceivable Windows control is
+implemented. (YAGNI)  It is however open for patches.  Here are some good reads
+which may inspire you if you wish to extend this toolkit: (more welcome)
 
 * [The Little Manual of API Design](https://people.mpi-inf.mpg.de/~jblanche/api-design.pdf)
 * [Digia API design](https://doc.qt.io/archives/qq/qq13-apis.html)
-
