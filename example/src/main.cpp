@@ -4,6 +4,7 @@
 #include <atk/aeditor.h>
 #include <atk/agraphics.h>
 #include <atk/alabel.h>
+#include <atk/ascrollbar.h>
 #include <atk/awindow.h>
 
 class ExampleWindow : public AWindow {
@@ -185,6 +186,21 @@ bool ExampleWindow::createEvent()
     editor->setText("Multiline Text Editor");
     editor->editorTextChanged->connect(new ASlot<AEditor*>(this, [](AEditor *editor) {
         std::cout << "multiline changed to " << editor->text() << std::endl;
+    }));
+
+    // Column 4 - Scrollbars
+    auto scrollbarHorz = new AHorizontalScrollBar(this);
+    scrollbarHorz->move({11*34, 9*1});
+    scrollbarHorz->resize({11*10, AScrollBar::optimumWidth()});
+    scrollbarHorz->positionChanged->connect(new ASlot<int>(this, [](int pos) {
+        std::cout << "horizontal scrollbar changed to " << pos << std::endl;
+    }));
+
+    auto scrollbarVert = new AVerticalScrollBar(this);
+    scrollbarVert->move({11*34, 9*4});
+    scrollbarVert->resize({AScrollBar::optimumWidth(), 9*21});
+    scrollbarVert->positionChanged->connect(new ASlot<int>(this, [](int pos) {
+        std::cout << "vertical scrollbar changed to " << pos << std::endl;
     }));
 
     return true;
