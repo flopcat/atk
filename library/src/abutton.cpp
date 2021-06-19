@@ -31,6 +31,30 @@ bool AButton::wmCommand(WPARAM wParam, LPARAM lParam, int &ret)
 }
 
 
+
+ABitmapButton::ABitmapButton(AWidget *owner) : AButton(owner)
+{
+    setObjectName("Bitmap Button Object");
+    setChildStyle(BS_BITMAP);
+    setChildText("");
+    childCreated->connect(new ASlot<>(this, &ABitmapButton::updateBitmap));
+}
+
+void ABitmapButton::setBitmap(const ABitmapResource &bitmap)
+{
+    bitmap_ = bitmap;
+    updateBitmap();
+}
+
+void ABitmapButton::updateBitmap()
+{
+    auto ch = childHandle();
+    if (ch)
+        SendMessage(ch, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmap_.handle());
+}
+
+
+
 ACheckBox::ACheckBox(AWidget *owner) : AButton(owner)
 {
     setObjectName("CheckBox Object");

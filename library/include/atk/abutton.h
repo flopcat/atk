@@ -1,4 +1,5 @@
 #ifndef ABUTTON_H
+#include <atk/agraphics.h>
 #include <atk/awidget.h>
 #include <atk/acontrolhost.h>
 #include <windows.h>
@@ -16,6 +17,20 @@ public:
     ASignal<AButton*> *buttonClicked;
 protected:
     bool wmCommand(WPARAM wParam, LPARAM lParam, int &ret);
+};
+
+class ABitmapButton : public AButton
+{
+public:
+    ABitmapButton(AWidget *parent);
+    void setBitmap(const ABitmapResource &bitmap);
+
+private:
+    using AButton::text;
+    using AButton::setText;
+    void updateBitmap();
+
+    ABitmapResource bitmap_;
 };
 
 class ACheckBox : public AButton

@@ -53,11 +53,20 @@ bool ExampleWindow::createEvent()
     std::cout << "Inside window createEvent" << std::endl;
     auto button = new AButton(this);
     button->move({11*1,9*1});
-    button->resize({110,27});
+    button->resize({11*4,9*3});
     button->setText("Test");
     button->clicked->connect(new ASlot<>(this, []() {
         // Print a message whenever the button is clicked
         std::cout << "button clicked" << std::endl;
+    }));
+
+    auto bmpButton = new ABitmapButton(this);
+    bmpButton->move({11*6,9*1});
+    bmpButton->resize({11*5,9*3});
+    bmpButton->setBitmap(ABitmapResource(3));
+    bmpButton->clicked->connect(new ASlot<>(this, []() {
+        // Print a message whenever the button is clicked
+        std::cout << "bitmap button clicked" << std::endl;
     }));
 
     auto check = new ACheckBox(this);
