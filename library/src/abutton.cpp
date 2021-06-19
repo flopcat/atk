@@ -131,8 +131,9 @@ void ARadioGroup::append(ARadioButton* button)
 
 void ARadioGroup::remove(ARadioButton* button)
 {
-    button->aboutToDeleteObject->disconnect(radio_deletedSlot);
-    button->buttonClicked->disconnect(radio_clickedSlot);
+    // no need to disconnect radio button from our signals, that will be done
+    // by the destructor of the radio button's signals.
+    radioButtons.erase(button);
 }
 
 void ARadioGroup::select(ARadioButton *button)
