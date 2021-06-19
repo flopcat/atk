@@ -75,14 +75,19 @@ void AScrollBar::updateScrollInfo()
     if (!childHandle())
         return;
 
-    // si.nPage must be set to 1 due to a bug in Windows, or full range will
-    // not be reached when dragged.
+    // Due to the way Windows decides the _scrollable_ area, we need to set the
+    // maximum to include the page width.  Consider the case where we're
+    // scrolling a bitmap: we can set si.nMax to the bitmap width and si.nPage
+    // to the visible client width (this is evident from the online example
+    // for bitmap scrolling).  So Windows will prevent you scrolling across the
+    // area where the last page width would be.  Therefore, the page width
+    // needs to be added to si.nMax to achieve the desired effect.
     SCROLLINFO si;
     si.cbSize = sizeof(si);
     si.fMask  = SIF_RANGE | SIF_PAGE | SIF_POS;
     si.nMin   = minimum_;
-    si.nMax   = maximum_;
-    si.nPage  = 1;
+    si.nMax   = maximum_ + (page_ - 1);
+    si.nPage  = page_;
     si.nPos = value_;
     SetScrollInfo(childHandle(), SB_CTL, &si, TRUE);
 
