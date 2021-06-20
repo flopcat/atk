@@ -59,8 +59,9 @@ public:
     int height() const { return sz.cy; }
     void setWidth(int w) { sz.cx = w; }
     void setHeight(int h) { sz.cy = h; }
-    void shrink(int dw, int dh) { sz.cx -= dw; sz.cy -= dh; }
-    void grow(int dw, int dh) { sz.cx += dw; sz.cy += dh; }
+    void adjust(int dw, int dh) { sz.cx += dw; sz.cy += dh; }
+    void shrink(int d) { sz.cx -= d; sz.cy -= d; }
+    void grow(int d) { sz.cx += d; sz.cy += d; }
 private:
     SIZE sz;
 };
@@ -72,6 +73,7 @@ public:
     ARect(const RECT &other) : rc(other) {}
     ARect(int x, int y, int w, int h) { rc = { x, y, x+w, x+h }; }
     const RECT *rect() const { return &rc; }
+    ASize size() const { return { width(), height() }; }
     void adjust(int dx, int dy) { rc.left += dx; rc.right += dx;
                                   rc.top += dy; rc.bottom += dy; }
     void shrink(int c) { rc.left += c; rc.right -= c;
