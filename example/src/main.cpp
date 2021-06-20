@@ -27,8 +27,16 @@ ExampleWindow::ExampleWindow(AWidget *owner) : AWindow(owner),
     // Set the object name, useful for debugging purposes.
     setObjectName("ExampleWindow");
 
-    // Resize and move the window into a suitable location.
-    resize({640, 480});
+    // Resize the window to have the same padding around our controls.
+    // Note: Beware of https://stackoverflow.com/questions/56397980/.  On some
+    // versions of Windows, buttons have an extra pixel of blank space around
+    // them, so it may look like you have extra padding if all you have on that
+    // side is a button.
+    ASize sz({11*45, 9*29});
+    sz.grow(metrics.sizeFrame() * 2);
+    sz.adjust(0, metrics.caption());
+    resize(sz);
+    // Move the window into a suitable location.
     move({320, 240});
 
     // Set a standard window style.  This is set in AWindow as well, so this
