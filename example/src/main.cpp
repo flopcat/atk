@@ -3,6 +3,7 @@
 #include <atk/abutton.h>
 #include <atk/aeditor.h>
 #include <atk/agraphics.h>
+#include <atk/aimagewidget.h>
 #include <atk/alabel.h>
 #include <atk/ascrollbar.h>
 #include <atk/awindow.h>
@@ -205,7 +206,7 @@ bool ExampleWindow::createEvent()
         std::cout << "multiline changed to " << editor->text() << std::endl;
     }));
 
-    // Column 4 - Scrollbars
+    // Column 4 - Scrollbars and bitmaps
     auto scrollbarHorz = new AHorizontalScrollBar(this);
     scrollbarHorz->move({11*34, 9*1});
     scrollbarHorz->resize({11*10, AScrollBar::optimumWidth()});
@@ -219,6 +220,16 @@ bool ExampleWindow::createEvent()
     scrollbarVert->positionChanged->connect(new ASlot<int>(this, [](int pos) {
         std::cout << "vertical scrollbar changed to " << pos << std::endl;
     }));
+
+    auto imageWidget = new AImageWidget(this);
+    imageWidget->move({11*44 - 48, 9*4});
+    imageWidget->resize({48, 48});
+    imageWidget->setIcon(AIconResource(2));
+
+    imageWidget = new AImageWidget(this);
+    imageWidget->move({11*44 - 32, 9*11});
+    imageWidget->resize({32, 16});
+    imageWidget->setBitmap(ABitmapResource(3));
 
     return true;
 }
