@@ -6,6 +6,25 @@
 #include <atk/utf8.h>
 #include <windows.h>
 
+
+
+int AWindowMetrics::caption()
+{
+    return GetSystemMetrics(SM_CYCAPTION);
+}
+
+int AWindowMetrics::frame()
+{
+    return GetSystemMetrics(SM_CXFIXEDFRAME);
+}
+
+int AWindowMetrics::sizeFrame()
+{
+    return GetSystemMetrics(SM_CXSIZEFRAME);
+}
+
+
+
 AWindow::AWindow(AWidget *owner) : AWidget(owner)
 {
     setObjectName("Window Object");
