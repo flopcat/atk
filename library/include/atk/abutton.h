@@ -63,11 +63,13 @@ public:
     ARadioGroup(AObject *owner);
     void append(ARadioButton* button);
     void remove(ARadioButton* button);
+    void removeFromList(ARadioButton *button);
     void select(ARadioButton* button);
 
     ASignal<ARadioButton*> *selected;
 private:
     void radio_buttonClicked(AButton* button);
+    void removeFromConnections(ARadioButton *button);
     ASlot<AButton*> *radio_clickedSlot;
     ASlot<AObject*> *radio_deletedSlot;
 

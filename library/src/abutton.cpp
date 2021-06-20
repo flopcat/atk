@@ -116,7 +116,9 @@ ARadioGroup::ARadioGroup(AObject *owner) : AObject(owner)
 {
     setObjectName("RadioGroup Object");
     radio_clickedSlot = new ASlot<AButton*>(this, &radio_buttonClicked);
-    radio_deletedSlot = new ASlot<AObject*>(this, [this](AObject* obj) { remove((ARadioButton*)obj); });
+    radio_deletedSlot = new ASlot<AObject*>(this, [this](AObject *obj) {
+        removeFromList((ARadioButton*)obj);
+    });
     selected = new ASignal<ARadioButton*>(this);
 }
 
@@ -131,8 +133,16 @@ void ARadioGroup::append(ARadioButton* button)
 
 void ARadioGroup::remove(ARadioButton* button)
 {
-    // no need to disconnect radio button from our signals, that will be done
-    // by the destructor of the radio button's signals.
+    // Do NOT call this function from the radio_deletedSlot, it will remove a
+    // connection while it is firing, which results in undefined behavior!  Use
+    // removeFromList instead; slots will be disconnected by the destructor of
+    // the radio button's signals anyway.
+    removeFromConnections(button);
+    removeFromList(button);
+}
+
+void ARadioGroup::removeFromList(ARadioButton *button)
+{
     radioButtons.erase(button);
 }
 
@@ -153,6 +163,14 @@ void ARadioGroup::radio_buttonClicked(AButton* button)
     }
     selected->send(radio);
 }
+
+void ARadioGroup::removeFromConnections(ARadioButton *button)
+{
+    button->aboutToDeleteObject->disconnect(radio_deletedSlot);
+    button->buttonClicked->disconnect(radio_clickedSlot);
+}
+
+
 
 AGroupBox::AGroupBox(AWidget *parent)
     : AButton(parent)
