@@ -303,6 +303,23 @@ public:
     void setFgColor(const AColor &c) { SetTextColor(hdc, c.color()); }
 
     void fillRect(const ARect &rect) { FillRect(hdc, rect.rect(), (HBRUSH)nowBrush); }
+    void drawBitmap(const ARect &rect, ABitmapResource &bitmap) {
+        if (!bitmap) return;
+        BITMAP bm = { 0 };
+        HBITMAP hBitmap((HBITMAP)bitmap.handle());
+        GetObject(hBitmap, sizeof(bm), &bm);
+        HDC hdcMem = CreateCompatibleDC(handle());
+        HGDIOBJ oldBitmap = SelectObject(hdcMem, hBitmap);
+        StretchBlt(handle(), rect.left(), rect.top(), rect.width(), rect.height(),
+            hdcMem, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);
+        SelectObject(hdcMem, oldBitmap);
+        DeleteDC(hdcMem);
+    }
+    void drawIcon(const ARect &rect, AIconResource &icon) {
+        if (!icon) return;
+        DrawIconEx(handle(), rect.left(), rect.top(), icon.handle(),
+            rect.width(), rect.height(), 0, NULL, DI_NORMAL);
+    }
     void drawFrame(const ARect &rect) { FrameRect(hdc, rect.rect(), (HBRUSH)nowBrush); }
     void drawRect(const ARect &rect) { Rectangle(hdc, rect.left(), rect.top(), rect.right(), rect.bottom()); }
     void drawEllipse(const ARect &rect) { Ellipse(hdc, rect.left(), rect.top(), rect.right(), rect.bottom()); }
